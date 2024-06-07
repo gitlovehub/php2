@@ -1,0 +1,23 @@
+{
+    "name": "my-namespace/my-project",
+    "autoload": {
+        "psr-4": {
+            "MyNamespace\\MyProject\\": "src/"
+        },
+        "files": [
+            "helper.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "gitlovehub",
+            "email": "hungtd010302@gmail.com"
+        }
+    ],
+    "require": {
+        "bramus/router": "~1.6",
+        "vlucas/phpdotenv": "^5.6",
+        "doctrine/dbal": "^4.0",
+        "eftec/bladeone": "^4.13"
+    }
+}
