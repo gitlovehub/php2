@@ -14,10 +14,12 @@
 // HTTP Method: get, post, put (path), delete, option, head
 
 use MyNamespace\MyProject\Controllers\Client\HomeController;
+use MyNamespace\MyProject\Controllers\Client\ProductController;
 use MyNamespace\MyProject\Controllers\Client\AuthController;
 
 $router->get( '/', HomeController::class . '@index');
+$router->get( '/products', ProductController::class . '@index');
 
-$router->get( '/auth/login',            AuthController::class . '@showFormLogin');
-$router->post( '/auth/handle-login',    AuthController::class . '@login');
-$router->get( '/auth/logout',           AuthController::class . '@logout');
+$router->get(  '/auth/login',            AuthController::class . '@loginPage');
+$router->post( '/auth/handle-login',     AuthController::class . '@login');
+$router->get(  '/auth/logout',           AuthController::class . '@logout');

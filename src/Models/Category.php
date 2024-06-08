@@ -6,5 +6,5 @@ use MyNamespace\MyProject\Common\Model;
 
 class Category extends Model
 {
-    protected string $tableName = 'categories';
+    protected string $tableName = 'tbl_categories';
 }

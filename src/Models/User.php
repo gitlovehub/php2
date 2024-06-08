@@ -6,7 +6,7 @@ use MyNamespace\MyProject\Common\Model;
 
 class User extends Model 
 {
-    protected string $tableName = 'users';
+    protected string $tableName = 'tbl_users';
     
     public function findByEmail($email) {
         return $this->queryBuilder

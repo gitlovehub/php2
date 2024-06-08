@@ -3,39 +3,38 @@
 namespace MyNamespace\MyProject\Controllers\Client;
 
 use MyNamespace\MyProject\Common\Controller;
+use MyNamespace\MyProject\Common\Helper;
 use MyNamespace\MyProject\Models\User;
 
 class AuthController extends Controller
 {
     private User $user;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->user = new User();
     }
 
-    public function showFormLogin() {
+    public function loginPage() {
         avoid_login();
-        
         $this->renderViewClient('login');
     }
 
     public function login() {
         avoid_login();
-
+        
         try {
             $user = $this->user->findByEmail($_POST['email']);
 
             if (empty($user)) {
-                throw new \Exception('Không tồn tại email: ' . $_POST['email']);
+                throw new \Exception('Email không tồn tại !');
             }
-
-            $flag = password_verify($_POST['password'], $user['password']); 
+            
+            $flag = password_verify($_POST['password'], $user['password']);
             if ($flag) {
 
                 $_SESSION['user'] = $user;
 
-                if ($user['type'] == 'admin') {
+                if ($user['role'] == 'admin') {
                     header('Location: ' . url('admin/') );
                     exit;
                 }
@@ -43,10 +42,10 @@ class AuthController extends Controller
                 header('Location: ' . url() );
                 exit;
             }
+            throw new \Exception('Password không đúng !');
 
-            throw new \Exception('Password không đúng');
         } catch (\Throwable $th) {
-            $_SESSION['error'] = $th->getMessage();
+            $_SESSION['msg'] = $th->getMessage();
 
             header('Location: ' . url('auth/login') );
             exit;
@@ -55,7 +54,6 @@ class AuthController extends Controller
 
     public function logout() {
         unset($_SESSION['user']);
-
         header('Location: ' . url() );
         exit;
     }

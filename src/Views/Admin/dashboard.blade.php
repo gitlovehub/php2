@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Dashboard    
+    Thống kê    
 @endsection
 
 @section('content')
