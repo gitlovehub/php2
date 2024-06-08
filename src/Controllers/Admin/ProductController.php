@@ -4,22 +4,25 @@ namespace MyNamespace\MyProject\Controllers\Admin;
 
 use MyNamespace\MyProject\Common\Controller;
 use MyNamespace\MyProject\Common\Helper;
+use MyNamespace\MyProject\Models\Category;
 use MyNamespace\MyProject\Models\Product;
 use Rakit\Validation\Validator;
 
 class ProductController extends Controller
 {
     private Product $product;
+    private Category $category;
+
     public function __construct() {
         $this->product = new Product();
+        $this->category = new Category();
     }
 
     public function index() {
-        $list = $this->product->read();
-        $cate = $this->product->getCategoryName();
+        $paginatedData = $this->product->paginateProducts(1, 5);
+        $list = $paginatedData[0]; // Extracting the paginated data
         $this->renderViewAdmin('products.index', [
-            'list' => $list,
-            'categories' => $cate,
+            'list' => $list
         ]);
     }
 
@@ -31,12 +34,17 @@ class ProductController extends Controller
     }
 
     public function create() {
-        $this->renderViewAdmin('products.create');
+        $categories = $this->category->read();
+        $categoryName = array_column($categories, 'name', 'id');
+        $this->renderViewAdmin('products.create', [
+            'categoryName' => $categoryName
+        ]);
     }
 
     public function store() {
         $validator = new Validator;
         $validation = $validator->make($_POST + $_FILES, [
+            'category_id'      => 'required',
             'name'             => 'required|max:50',
             'description'      => 'required|max:255',
             'price'            => 'required|numeric|min:0.01',
@@ -54,6 +62,7 @@ class ProductController extends Controller
                 'name'            => $_POST['name'],
                 'description'     => $_POST['description'],
                 'price'           => $_POST['price'],
+                'category_id'     => $_POST['category_id'],
             ];
 
             if (isset($_FILES['thumbnail']) && $_FILES['thumbnail']['size'] > 0) {
@@ -83,8 +92,13 @@ class ProductController extends Controller
 
     public function edit($id) {
         $product = $this->product->findByID($id);
+        $categories = $this->category->read();
+
+        $categoryName = array_column($categories, 'name', 'id');
+
         $this->renderViewAdmin('products.edit', [
-            'product' => $product
+            'product' => $product,
+            'categoryName' => $categoryName,
         ]);
     }
 
@@ -93,6 +107,7 @@ class ProductController extends Controller
     
             $validator = new Validator;
             $validation = $validator->make($_POST + $_FILES, [
+                'category_id'      => 'required',
                 'name'             => 'required|max:50',
                 'description'      => 'required|max:255',
                 'price'            => 'required|numeric|min:0.01',
@@ -110,6 +125,7 @@ class ProductController extends Controller
                     'name'            => $_POST['name'],
                     'description'     => $_POST['description'],
                     'price'           => $_POST['price'],
+                    'category_id'     => $_POST['category_id'],
                 ];
     
                 $flagUpload = false;

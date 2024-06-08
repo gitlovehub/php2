@@ -47,7 +47,7 @@
                 <tr>
                     <td class="w-1/6 py-3 whitespace-nowrap">{{$product['id']}}</td>
                     <td class="w-1/6 py-3 whitespace-nowrap">
-                        {{$product['category_id']}}
+                        {{$product['category_name']}}
                     </td>
                     <td class="w-1/6 py-3 whitespace-nowrap">
                         <div class="w-16 h-16 rounded overflow-hidden border shadow-md">
@@ -66,5 +66,7 @@
                 </tr>
             @endforeach
         </tbody>
+
+        {{-- {{ $totalPages->links() }} --}}
     </table>
 @endsection

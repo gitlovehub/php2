@@ -24,12 +24,9 @@
     <form action="{{ url("admin/products/store") }}" enctype="multipart/form-data" method="POST" class="container max-w-screen-sm m-auto pt-4">
         <div class="mb-4">
             <label for="category" class="block text-gray-700 text-base font-bold mb-2">Category Name</label>
-            <select id="category" name="category" class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500">
-                <!-- Option mặc định -->
-                <option value="" selected disabled>Select a category</option>
-                <!-- Dữ liệu danh mục được đổ vào từ controller hoặc từ cơ sở dữ liệu -->
-                @foreach ($categories as $category)
-                    <option value="{{ $category['id'] }}"></option>
+            <select id="category" name="category_id" class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500">
+                @foreach ($categoryName as $id => $name)
+                    <option value="{{ $id }}">{{ $name }}</option>
                 @endforeach
             </select>
         </div>
@@ -47,7 +44,7 @@
         </div>
         <div class="mb-4">
             <label for="description" class="block text-gray-700 text-base font-bold mb-2">Description</label>
-            <textarea id="description" name="description" class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"></textarea>
+            <textarea id="description" name="description" rows="4" cols="50" class="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:border-blue-500"></textarea>
         </div>
     
         <button type="submit" class="font-semibold w-full px-6 py-2 my-2 text-white border-2 border-cyan-500 bg-cyan-500 hover:bg-white hover:text-cyan-500">

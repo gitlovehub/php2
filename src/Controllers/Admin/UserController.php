@@ -14,9 +14,12 @@ class UserController extends Controller
     }
 
     public function index() {
-        $list = $this->user->read();
+        $paginatedData = $this->user->paginate(1, 5);
+        $list = $paginatedData[0]; // Extracting the paginated data
+        $totalPages = $paginatedData[1]; // Extracting the total number of pages
         $this->renderViewAdmin('users.index', [
-            'list' => $list
+            'list' => $list,
+            'totalPages' => $totalPages // You might want to pass this to your view for additional handling
         ]);
     }
 

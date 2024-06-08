@@ -43,7 +43,7 @@ class Model
         ->fetchOne();
     }
 
-    public function paginate($page = 1, $perPage = 10) {
+    public function paginate($page, $perPage) {
         $totalPage = ceil($this->count() / $perPage);
         $offset = $perPage * ($page - 1);
         $data = $this->queryBuilder

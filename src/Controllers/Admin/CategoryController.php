@@ -14,9 +14,10 @@ class CategoryController extends Controller
     }
 
     public function index() {
-        $list = $this->category->read();
+        $paginatedData = $this->category->paginate(1, 5);
+        $list = $paginatedData[0]; // Extracting the paginated data
         $this->renderViewAdmin('categories.index', [
-            'list' => $list
+            'list' => $list,
         ]);
     }
 
