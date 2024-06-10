@@ -131,7 +131,7 @@
                                     </td>
                                     <td class="py-2 whitespace-nowrap text-end">
                                         @php
-                                            $url = url('cart/delete') . '?cartID='. $_SESSION['cart_id'] . '&productID=' . $item['product_id'];
+                                            $url = url('cart/delete') . '?cartID='. ($_SESSION['cart_id'] ?? $item['cart_id']) . '&productID=' . $item['product_id'];
                                         @endphp
                                         <a onclick="return confirm('Are you sure?')" href="{{ $url }}">
                                             <span class="material-symbols-outlined mr-2 text-gray-400 hover:text-red-500 cursor-pointer">delete</span>

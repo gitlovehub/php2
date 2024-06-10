@@ -36,7 +36,7 @@
         </div>
         </section>
 
-        <p class="mt-16 py-8 text-center border-t-2 border-white">
+        <p class="mt-16 py-6 text-sm text-center border-t border-gray-500">
             Copyright © 2023 Euphoria Folks Pvt Ltd. All rights reserved.
         </p>
 </footer>

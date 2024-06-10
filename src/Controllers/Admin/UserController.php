@@ -19,6 +19,7 @@ class UserController extends Controller
         $this->renderViewAdmin('users.index', [
             'list' => $list,
             'totalPages' => $totalPage,
+            'currentPage' => $page,
         ]);
     }
 
@@ -66,7 +67,7 @@ class UserController extends Controller
                 if (move_uploaded_file($from, PATH_ROOT . $to)) {
                     $data['avatar'] = $to;
                 } else {
-                    $_SESSION['errors']['avatar'] = 'Tải lên thất bại!';
+                    $_SESSION['errors']['avatar'] = 'Upload Failed 😕';
 
                     header('Location: ' . url('admin/users/create'));
                     exit;
@@ -75,8 +76,8 @@ class UserController extends Controller
 
             $this->user->insert($data);
 
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Tải lên thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Created successfully 😊';
 
             header('Location: ' . url('admin/users'));
             exit;
@@ -125,7 +126,7 @@ class UserController extends Controller
                     if (move_uploaded_file($from, PATH_ROOT . $to)) {
                         $data['avatar'] = $to;
                     } else {
-                        $_SESSION['errors']['avatar'] = 'Cập nhật thất bại!';
+                        $_SESSION['errors']['avatar'] = 'Update Failed 😕';
     
                         header('Location: ' . url("admin/users/{$user['id']}/edit"));
                         exit;
@@ -142,8 +143,8 @@ class UserController extends Controller
                     unlink(PATH_ROOT . $user['avatar']);
                 }
     
-                $_SESSION['alert'] = true;
-                $_SESSION['msg'] = 'Cập nhật thành công 🎉';
+                $_SESSION['alert-success'] = true;
+                $_SESSION['msg'] = 'Updated Successfully 😊';
     
                 header('Location: ' . url("admin/users/{$user['id']}/edit"));
                 exit;
@@ -153,11 +154,11 @@ class UserController extends Controller
     public function delete($id) {
         try {
             $this->user->delete($id);
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Thao tác thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Action Completed Successfully! 🤑';
         } catch (\Throwable $th) {
-            $_SESSION['alert'] = false;
-            $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
+            $_SESSION['alert-error'] = true;
+            $_SESSION['msg'] = 'Action Failed! 🤦‍♂️😞';
         }
         header('Location: ' . url('admin/users'));
         exit();

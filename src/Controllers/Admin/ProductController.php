@@ -25,6 +25,7 @@ class ProductController extends Controller
         $this->renderViewAdmin('products.index', [
             'list' => $list,
             'totalPages' => $totalPage,
+            'currentPage' => $page,
         ]);
     }
 
@@ -75,7 +76,7 @@ class ProductController extends Controller
                 if (move_uploaded_file($from, PATH_ROOT . $to)) {
                     $data['thumbnail'] = $to;
                 } else {
-                    $_SESSION['errors']['thumbnail'] = 'Tải lên thất bại!';
+                    $_SESSION['errors']['thumbnail'] = 'Upload Failed 😕';
 
                     header('Location: ' . url('admin/products/create'));
                     exit;
@@ -84,8 +85,8 @@ class ProductController extends Controller
 
             $this->product->insert($data);
 
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Tải lên thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Created successfully 😊';
 
             header('Location: ' . url('admin/products'));
             exit;
@@ -141,7 +142,7 @@ class ProductController extends Controller
                     if (move_uploaded_file($from, PATH_ROOT . $to)) {
                         $data['thumbnail'] = $to;
                     } else {
-                        $_SESSION['errors']['thumbnail'] = 'Cập nhật thất bại!';
+                        $_SESSION['errors']['thumbnail'] = 'Update Failed 😕';
     
                         header('Location: ' . url("admin/products/{$product['id']}/edit"));
                         exit;
@@ -158,8 +159,8 @@ class ProductController extends Controller
                     unlink(PATH_ROOT . $product['thumbnail']);
                 }
     
-                $_SESSION['alert'] = true;
-                $_SESSION['msg'] = 'Cập nhật thành công 🎉';
+                $_SESSION['alert-success'] = true;
+                $_SESSION['msg'] = 'Updated Successfully 😊';
     
                 header('Location: ' . url("admin/products/{$product['id']}/edit"));
                 exit;
@@ -169,11 +170,11 @@ class ProductController extends Controller
     public function delete($id) {
         try {
             $this->product->delete($id);
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Thao tác thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Action Completed Successfully! 🤑';
         } catch (\Throwable $th) {
-            $_SESSION['alert'] = false;
-            $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
+            $_SESSION['alert-error'] = true;
+            $_SESSION['msg'] = 'Action Failed! 🤦‍♂️😞';
         }
         header('Location: ' . url('admin/products'));
         exit();

@@ -14,10 +14,12 @@ class CategoryController extends Controller
     }
 
     public function index() {
-        $paginatedData = $this->category->paginate(1, 5);
-        $list = $paginatedData[0]; // Extracting the paginated data
+        $page = $_GET["page"] ?? 1;
+        [$list, $totalPage] = $this->category->paginate($page);
         $this->renderViewAdmin('categories.index', [
             'list' => $list,
+            'totalPages' => $totalPage,
+            'currentPage' => $page,
         ]);
     }
 
@@ -44,8 +46,8 @@ class CategoryController extends Controller
 
             $this->category->insert($data);
 
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Tải lên thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Created Successfully 😊';
 
             header('Location: ' . url('admin/categories'));
             exit;
@@ -80,8 +82,8 @@ class CategoryController extends Controller
     
                 $this->category->update($id, $data);
     
-                $_SESSION['alert'] = true;
-                $_SESSION['msg'] = 'Cập nhật thành công 🎉';
+                $_SESSION['alert-success'] = true;
+                $_SESSION['msg'] = 'Updated Successfully 😊';
     
                 header('Location: ' . url("admin/categories/{$category['id']}/edit"));
                 exit;
@@ -91,11 +93,11 @@ class CategoryController extends Controller
     public function delete($id) {
         try {
             $this->category->delete($id);
-            $_SESSION['alert'] = true;
-            $_SESSION['msg'] = 'Thao tác thành công 🎉';
+            $_SESSION['alert-success'] = true;
+            $_SESSION['msg'] = 'Action Completed Successfully! 🤑';
         } catch (\Throwable $th) {
-            $_SESSION['alert'] = false;
-            $_SESSION['msg'] = 'Thao tác KHÔNG thành công!';
+            $_SESSION['alert-error'] = true;
+            $_SESSION['msg'] = 'Action Failed! 🤦‍♂️😞';
         }
         header('Location: ' . url('admin/categories'));
         exit();

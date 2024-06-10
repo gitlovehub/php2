@@ -16,15 +16,6 @@ class Product extends Model
             ->fetchOne();
     }
 
-    // public function getCategoryWithMostProducts() {
-    //     return $this->queryBuilder
-    //         ->select('category_id, COUNT(*) AS product_count')
-    //         ->from('tbl_products')
-    //         ->groupBy('category_id')
-    //         ->orderBy('product_count', 'DESC')
-    //         ->fetchAssociative();
-    // }
-
     public function getCategoryName() {
         // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
         $queryBuilder = clone($this->queryBuilder);
@@ -38,7 +29,7 @@ class Product extends Model
             ->fetchAllAssociative();
     }
 
-    public function paginateProducts($page = 1, $perPage = 5) {
+    public function paginateProducts($page = 1, $perPage = 3) {
         // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
         $queryBuilder = clone($this->queryBuilder);
         $totalPage = ceil($this->count() / $perPage);

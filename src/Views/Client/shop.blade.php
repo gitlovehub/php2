@@ -60,21 +60,19 @@
                 @endforeach
             </div>
 
-            <div class="flex items-center space-x-2 font-medium my-8">
+            <div class="flex items-center justify-end space-x-2 font-medium my-8">
                 <!-- Previous Page Link -->
-                <!-- <a href="#" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 flex items-center">
-                    Previous
-                </a> -->
-                
+
                 <!-- Page Numbers -->
-                @for ($i = 1; $i <= $totalPages; $i++)
-                    <a href="?page={{$i}}" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300">{{$i}}</a>
-                @endfor
+                <ul class="flex gap-2">
+                    @for ($i = 1; $i <= $totalPages; $i++)
+                        <a href="?page={{$i}}" class="px-4 py-2 {{ $currentPage == $i ? 'bg-amber-600 text-white' : 'bg-gray-200 text-gray-600' }} font-semibold rounded-lg hover:opacity-75">
+                            {{$i}}
+                        </a>
+                    @endfor
+                </ul>
 
                 <!-- Next Page Link -->
-                <a href="#" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 flex items-center">
-                    Next
-                </a>
             </div>
         </main>
     </div>

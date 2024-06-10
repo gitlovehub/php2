@@ -8,7 +8,7 @@
     @if (!empty($_SESSION['errors']))
         <ul>
             @foreach ($_SESSION['errors'] as $error)
-            <li class="inline-block bg-red-500 text-white px-4 py-1 rounded-full text-sm font-semibold my-4">
+            <li class="inline-block bg-red-100 text-red-800 text-sm font-medium mt-4 px-2.5 py-1 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">
                 {{ $error }}
             </li>
             @endforeach
@@ -16,17 +16,6 @@
 
         @php
             unset($_SESSION['errors']);
-        @endphp
-    @endif
-
-    @if (isset($_SESSION['alert']) && $_SESSION['alert'])
-        <span class="inline-block bg-green-500 text-white px-4 py-1 rounded-full text-sm font-semibold my-4">
-            {{ $_SESSION["msg"] }}
-        </span>
-
-        @php
-            unset($_SESSION['alert']);
-            unset($_SESSION['msg']);
         @endphp
     @endif
 @endsection
