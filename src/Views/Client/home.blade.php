@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('titlebar')
+    FPT Funi − Home
+@endsection
+
 @section('content')
 <section class="pt-[72px]">
     <img class="w-full h-600 object-center" src="assets/images/home-banner.jpg" alt="">
@@ -14,18 +18,31 @@
     </div>
 
     <div class="pt-4 grid grid-cols-4 gap-8">
-        @foreach ($list as $product)
-            <div class="cursor-pointer transition duration-300 border-2 hover:border-2 hover:border-amber-500 hover:shadow-md">
-                <div class="h-80 overflow-hidden">
-                    <img class="w-full h-full object-cover" src="{{ asset($product['thumbnail']) }}" alt="">
+        @foreach ($products as $product)
+            <div class="cursor-pointer transition duration-300 border-2 hover:border-2 hover:border-amber-500 hover:shadow-md relative">
+                @if ($product['instock'] < 1)
+                    <div class="absolute bg-gray-200 opacity-60 w-full h-full flex cursor-not-allowed"></div>
+                @endif
+                <div onclick="redirectToProductDetail({{$product['id']}})">
+                    <div class="h-80 overflow-hidden">
+                        <img class="w-full h-full object-cover" src="{{ asset($product['thumbnail']) }}" alt="">
+                    </div>
+                    <div class="bg-gray-100 px-4">
+                        <h4 class="font-semibold text-xl">{{$product['name']}}</h4>
+                        <p class="font-medium text-sm text-gray-500 pt-1">Category: {{$product['category_name']}}</p>
+                        <h4 class="font-semibold pt-2 text-xl text-red-500">£{{ number_format($product['price'], 2, '.', ',') }}</h4>
+                    </div>
                 </div>
                 <div class="bg-gray-100 p-4">
-                    <h4 class="font-semibold text-xl">{{$product['name']}}</h4>
-                    <p class="font-normal pt-1">Category: {{$product['category_id']}}</p>
-                    <h4 class="font-semibold pt-2 text-xl text-red-500">£{{ number_format($product['price'], 2, '.', ',') }}</h4>
-                    <button
-                        class="mt-3 py-2 w-full uppercase font-semibold text-amber-500 border-2 border-amber-500 hover:bg-amber-500 hover:text-white">Add
-                        to cart</button>
+                    @if ($product['instock'] < 1)
+                        <a href="#" class="block py-2 text-center uppercase font-semibold text-amber-500 border-2 border-amber-500 hover:bg-amber-500 hover:text-white">
+                            Sold out
+                        </a>
+                    @else
+                        <a href="{{url('cart/add')}}?quantity=1&productID={{$product['id']}}" class="block py-2 text-center uppercase font-semibold text-amber-500 border-2 border-amber-500 hover:bg-amber-500 hover:text-white">
+                            Add to cart
+                        </a>
+                    @endif
                 </div>
             </div>
         @endforeach

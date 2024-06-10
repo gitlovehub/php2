@@ -34,6 +34,8 @@ class AuthController extends Controller
 
                 $_SESSION['user'] = $user;
 
+                unset($_SESSION["cart"]);
+
                 if ($user['role'] == 'admin') {
                     header('Location: ' . url('admin/') );
                     exit;
@@ -53,8 +55,11 @@ class AuthController extends Controller
     }
 
     public function logout() {
+        unset($_SESSION['cart-'.$_SESSION['user']['id']]);
         unset($_SESSION['user']);
-        header('Location: ' . url() );
+        header('Location: ' . url());
         exit;
     }
+
+    public function account() {$this->renderViewClient('account', []);}
 }

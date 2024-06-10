@@ -34,29 +34,31 @@
     <table class="w-full divide-y divide-gray-200 font-medium">
         <thead class="bg-gray-100">
             <tr>
-                <th class="w-1/6 py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Id</th>
-                <th class="w-1/6 py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Category</th>
-                <th class="w-1/6 py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Thumbnail</th>
-                <th class="w-1/6 py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Name</th>
-                <th class="w-1/6 py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Price</th>
-                <th class="w-1/6 py-3 text-gray-600 text-end font-semibold uppercase tracking-wider">Action</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Id</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Category</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Thumbnail</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Name</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Price</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Instock</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Action</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($list as $product)
-                <tr>
-                    <td class="w-1/6 py-3 whitespace-nowrap">{{$product['id']}}</td>
-                    <td class="w-1/6 py-3 whitespace-nowrap">
+                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg text-center">
+                    <td class="py-3 whitespace-nowrap">{{$product['id']}}</td>
+                    <td class="py-3 whitespace-nowrap">
                         {{$product['category_name']}}
                     </td>
-                    <td class="w-1/6 py-3 whitespace-nowrap">
+                    <td class="py-3 whitespace-nowrap grid place-items-center">
                         <div class="w-16 h-16 rounded overflow-hidden border shadow-md">
                             <img src="{{ asset($product['thumbnail']) }}" alt="" class="w-full h-full object-cover">
                         </div>
                     </td>
-                    <td class="w-1/6 py-3 whitespace-nowrap">{{$product['name']}}</td>
-                    <td class="w-1/6 py-3 whitespace-nowrap">{{$product['price']}}</td>
-                    <td class="w-1/6 py-3 whitespace-nowrap text-end">
+                    <td class="py-3 whitespace-nowrap">{{$product['name']}}</td>
+                    <td class="py-3 whitespace-nowrap">{{$product['price']}}</td>
+                    <td class="py-3 whitespace-nowrap">{{$product['instock']}}</td>
+                    <td class="py-3 whitespace-nowrap">
                         <a href="{{ url("admin/products/{$product['id']}/show") }}" class="text-green-500 me-2">Xem</a>
                         <a href="{{ url("admin/products/{$product['id']}/edit") }}" class="text-amber-500 me-2">Sửa</a>
                         <a href="{{ url("admin/products/{$product['id']}/delete" ) }}"
@@ -67,6 +69,11 @@
             @endforeach
         </tbody>
 
-        {{-- {{ $totalPages->links() }} --}}
     </table>
+
+    <div class="mt-10">
+        @for ($i = 1; $i <= $totalPages; $i++)
+            <a href="?page={{$i}}" class="me-2 px-4 py-2 bg-gray-200 font-semibold text-gray-600 rounded-lg hover:bg-gray-300">{{$i}}</a>
+        @endfor
+    </div>
 @endsection

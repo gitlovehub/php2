@@ -12,10 +12,10 @@ class HomeController extends Controller
     }
 
     public function index() {
-        $list = $this->product->read();
-        $sliced_list = array_slice($list, 0, 4);
+        $product = $this->product->getCategoryName();
+        $sliced_list = array_slice($product, 0, 4);
         $this->renderViewClient('home', [
-            'list' => $sliced_list,
+            'products' => $sliced_list,
         ]);
     }
 }

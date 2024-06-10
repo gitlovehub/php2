@@ -14,7 +14,7 @@
                     '600': '600px',
                 },
                 maxWidth: {
-                    'screen-400': '400px', // Define max-width for screen size 400px
+                    'screen-400': '400px',
                 },
                 maxHeight: {
                     '400': '400px',
@@ -29,16 +29,32 @@
             }
           }
         }
-      </script>
-    <title>FPT Funi − Home</title>
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+    </style>
+    <title>@yield('titlebar')</title>
 </head>
 
 <body class="text-body">
+
     @include('layouts.partials.header')
 
-    @yield('content')
+    <main class="min-h-screen">
+        @yield('content')
+    </main>
 
     @include('layouts.partials.footer')
+
+    <script>
+        function redirectToProductDetail(productId) {
+            window.location.href = '{{ url('product-detail') }}/' + productId;
+        }
+    </script>
 </body>
 
 </html>

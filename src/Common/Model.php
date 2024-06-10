@@ -27,6 +27,10 @@ class Model
         $this->queryBuilder = $this->conn->createQueryBuilder();
     }
 
+    public function getConnection() {
+        return $this->conn;
+    }
+
     // CRUD
     public function read() {
         return $this->queryBuilder
@@ -38,12 +42,12 @@ class Model
 
     public function count() {
         return $this->queryBuilder
-        ->select("COUNT(*) AS $this->tableName")
+        ->select("COUNT(*) AS count")
         ->from($this->tableName)
         ->fetchOne();
     }
 
-    public function paginate($page, $perPage) {
+    public function paginate($page, $perPage = 5) {
         $totalPage = ceil($this->count() / $perPage);
         $offset = $perPage * ($page - 1);
         $data = $this->queryBuilder

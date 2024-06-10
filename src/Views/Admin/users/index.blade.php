@@ -35,17 +35,17 @@
         <thead class="bg-gray-100">
             <tr>
                 <th class="py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Id</th>
-                <th class="py-3 text-gray-600 text-center font-semibold uppercase tracking-wider">Avatar</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Avatar</th>
                 <th class="py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Name</th>
                 <th class="py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Email</th>
-                <th class="py-3 text-gray-600 text-center font-semibold uppercase tracking-wider">Created at</th>
-                <th class="py-3 text-gray-600 text-center font-semibold uppercase tracking-wider">Update at</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Created at</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Update at</th>
                 <th class="py-3 text-gray-600 text-end font-semibold uppercase tracking-wider">Action</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($list as $user)
-                <tr>
+                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg">
                     <td class="py-3 whitespace-nowrap">{{$user['id']}}</td>
                     <td class="py-3 whitespace-nowrap grid place-items-center">
                         <div class="w-12 h-12 rounded-full overflow-hidden drop-shadow-md">
@@ -67,4 +67,10 @@
             @endforeach
         </tbody>
     </table>
+
+    <div class="mt-10">
+        @for ($i = 1; $i <= $totalPages; $i++)
+            <a href="?page={{$i}}" class="me-2 px-4 py-2 bg-gray-200 font-semibold text-gray-600 rounded-lg hover:bg-gray-300">{{$i}}</a>
+        @endfor
+    </div>
 @endsection

@@ -15,11 +15,21 @@
 
 use MyNamespace\MyProject\Controllers\Client\HomeController;
 use MyNamespace\MyProject\Controllers\Client\ProductController;
+use MyNamespace\MyProject\Controllers\Client\CartController;
 use MyNamespace\MyProject\Controllers\Client\AuthController;
 
-$router->get( '/', HomeController::class . '@index');
-$router->get( '/products', ProductController::class . '@index');
+$router->get( '/',                      HomeController::class . '@index');
+$router->get( '/cart',                  CartController::class . '@cart');
+$router->get( '/cart/add',              CartController::class . '@add');
+$router->get( '/cart/delete',           CartController::class . '@delete');
+$router->get( '/cart/update',           CartController::class . '@update');
 
-$router->get(  '/auth/login',            AuthController::class . '@loginPage');
-$router->post( '/auth/handle-login',     AuthController::class . '@login');
-$router->get(  '/auth/logout',           AuthController::class . '@logout');
+$router->get( '/shop',                  ProductController::class . '@shop');
+$router->post( '/search',               ProductController::class . '@search');
+$router->get( '/cate/{id}/',            ProductController::class . '@cate');
+$router->get( '/product-detail/{id}/',  ProductController::class . '@detail');
+
+$router->get(  '/auth/login',           AuthController::class . '@loginPage');
+$router->post( '/auth/handle-login',    AuthController::class . '@login');
+$router->get(  '/auth/logout',          AuthController::class . '@logout');
+$router->get( '/account',               AuthController::class . '@account');

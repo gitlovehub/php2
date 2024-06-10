@@ -16,4 +16,14 @@ class User extends Model
             ->setParameter(0, $email)
             ->fetchAssociative();
     }
+
+    public function countUserByMonth($year, $month) {
+        return $this->queryBuilder
+            ->select('COUNT(*)')
+            ->from($this->tableName)
+            ->where('YEAR(created_at) = ?')
+            ->andWhere('MONTH(created_at) = ?')
+            ->setParameters([$year, $month])
+            ->fetchOne();
+    }
 }

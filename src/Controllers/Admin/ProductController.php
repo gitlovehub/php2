@@ -19,10 +19,12 @@ class ProductController extends Controller
     }
 
     public function index() {
-        $paginatedData = $this->product->paginateProducts(1, 5);
-        $list = $paginatedData[0]; // Extracting the paginated data
+        $list = $this->product->getCategoryName();
+        $page = $_GET["page"] ?? 1;
+        [$list, $totalPage] = $this->product->paginateProducts($page);
         $this->renderViewAdmin('products.index', [
-            'list' => $list
+            'list' => $list,
+            'totalPages' => $totalPage,
         ]);
     }
 

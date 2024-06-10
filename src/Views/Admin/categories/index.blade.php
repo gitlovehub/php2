@@ -34,21 +34,21 @@
     <table class="w-full divide-y divide-gray-200 font-medium">
         <thead class="bg-gray-100">
             <tr>
-                <th class="py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Id</th>
-                <th class="py-3 text-gray-600 text-left font-semibold uppercase tracking-wider">Name</th>
-                <th class="py-3 text-gray-600 text-center font-semibold uppercase tracking-wider">Created at</th>
-                <th class="py-3 text-gray-600 text-center font-semibold uppercase tracking-wider">Update at</th>
-                <th class="py-3 text-gray-600 text-end font-semibold uppercase tracking-wider">Action</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Id</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Name</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Created at</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Update at</th>
+                <th class="py-3 text-gray-600 font-semibold uppercase tracking-wider">Action</th>
             </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
             @foreach ($list as $category)
-                <tr>
+                <tr class="transition-all hover:bg-gray-100 hover:shadow-lg text-center">
                     <td class="py-3 whitespace-nowrap">{{$category['id']}}</td>
                     <td class="py-3 whitespace-nowrap">{{$category['name']}}</td>
-                    <td class="py-3 whitespace-nowrap text-center">{{$category['created_at']}}</td>
-                    <td class="py-3 whitespace-nowrap text-center">{{$category['updated_at']}}</td>
-                    <td class="py-3 whitespace-nowrap text-end">
+                    <td class="py-3 whitespace-nowrap">{{$category['created_at']}}</td>
+                    <td class="py-3 whitespace-nowrap">{{$category['updated_at']}}</td>
+                    <td class="py-3 whitespace-nowrap">
                         <a href="{{ url("admin/categories/{$category['id']}/edit") }}" class="text-amber-500 me-2">Sửa</a>
                         <a href="{{ url("admin/categories/{$category['id']}/delete" ) }}"
                             onclick="return confirm('Are you sure?')"

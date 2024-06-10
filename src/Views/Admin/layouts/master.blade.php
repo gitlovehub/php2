@@ -23,7 +23,7 @@
 <body>
     @include('layouts.partials.aside')
 
-    <section class="container max-w-screen-xl m-auto pt-10 ps-40">
+    <section class="container max-w-screen-xl m-auto py-10 pl-40">
         <h1 class="text-2xl uppercase font-bold text-center">@yield('title')</h1>
 
         <div class="grid place-items-center">

@@ -35,7 +35,7 @@ if (!function_exists('avoid_login')) { // Bỏ qua trang Login khi đã đăng n
                 exit;
             }
             
-            header('Location: ' . url() );
+            header('Location: ' . url('account'));
             exit;
         }
     }

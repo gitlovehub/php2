@@ -3,7 +3,7 @@
         <div class="grid grid-cols-4 justify-items-center gap-8 pt-16">
             <div>
                 <a href="{{ url() }}" class="block pb-4">
-                    <img src="assets/images/kia-logo-light.png" alt="">
+                    <img src="{{ asset('assets/images/kia-logo-light.png') }}" alt="">
                 </a>
                 <p>Cổng số 1, Tòa nhà FPT Polytechnic, 13 phố Trịnh Văn Bô, phường Phương Canh, quận Nam Từ Liêm, TP
                     Hà Nội</p>

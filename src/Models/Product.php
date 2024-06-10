@@ -8,10 +8,29 @@ class Product extends Model
 {
     protected string $tableName = 'tbl_products';
 
-    public function getCategoryName() {
+    public function countAvailableProducts() {
         return $this->queryBuilder
+            ->select("COUNT(*)")
+            ->from($this->tableName)
+            ->where('instock > 0')
+            ->fetchOne();
+    }
+
+    // public function getCategoryWithMostProducts() {
+    //     return $this->queryBuilder
+    //         ->select('category_id, COUNT(*) AS product_count')
+    //         ->from('tbl_products')
+    //         ->groupBy('category_id')
+    //         ->orderBy('product_count', 'DESC')
+    //         ->fetchAssociative();
+    // }
+
+    public function getCategoryName() {
+        // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
+        $queryBuilder = clone($this->queryBuilder);
+        return $queryBuilder
             ->select(
-                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.category_id', 'cate.name as category_name'
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
             )
             ->from($this->tableName, 'p')
             ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
@@ -19,16 +38,14 @@ class Product extends Model
             ->fetchAllAssociative();
     }
 
-    public function paginateProducts($page, $perPage) {
+    public function paginateProducts($page = 1, $perPage = 5) {
+        // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
         $queryBuilder = clone($this->queryBuilder);
-    
         $totalPage = ceil($this->count() / $perPage);
-    
         $offset = $perPage * ($page - 1);
-    
         $data = $queryBuilder
             ->select(
-                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.category_id', 'cate.name as category_name'
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
             )
             ->from($this->tableName, 'p')
             ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
@@ -40,15 +57,42 @@ class Product extends Model
         return [$data, $totalPage];
     }
 
-    public function findProductByID($id) {
-        return $this->queryBuilder
+    public function findByProductID($id) {
+        // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
+        $queryBuilder = clone($this->queryBuilder);
+        return $queryBuilder
             ->select(
-                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.category_id', 'c.name as category_name'
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
             )
             ->from($this->tableName, 'p')
-            ->innerJoin('p', 'tbl_categories', 'c', 'c.id = p.category_id')
+            ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
             ->where('p.id = ?')
             ->setParameter(0, $id)
             ->fetchAssociative();
     }
+
+    public function getRelatedProducts($categoryId) {
+        return $this->queryBuilder
+            ->select(
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
+            )
+            ->from($this->tableName, 'p')
+            ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
+            ->where('p.category_id = ?')
+            ->setParameter(0, $categoryId)
+            ->fetchAllAssociative();
+    }
+    
+    public function searchProductsByName($keyword) {
+        return $this->queryBuilder
+            ->select(
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
+            )
+            ->from($this->tableName, 'p')
+            ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
+            ->where('p.name LIKE :keyword')
+            ->setParameter('keyword', "%$keyword%")
+            ->fetchAllAssociative();
+    }
+    
 }

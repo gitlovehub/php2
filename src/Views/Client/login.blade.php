@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('titlebar')
+    FPT Funi − Login
+@endsection
+
 @section('content')
 <section style="min-height: 90vh;" class="pt-[72px]">
     <h2 class="text-[40px] text-center font-semibold pt-10">Login</h2>
