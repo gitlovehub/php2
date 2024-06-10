@@ -20,7 +20,7 @@ class ProductController extends Controller
     public function shop() {
         $category = $this->category->read();
         $page = $_GET["page"] ?? 1;
-        [$product, $totalPage] = $this->product->paginateProducts($page);
+        [$product, $totalPage] = $this->product->paginateClientProducts($page);
         $this->renderViewClient('shop', [
             'products' => $product,
             'categories' => $category,

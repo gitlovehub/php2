@@ -29,7 +29,26 @@ class Product extends Model
             ->fetchAllAssociative();
     }
 
-    public function paginateProducts($page = 1, $perPage = 3) {
+    public function paginateProducts($page = 1, $perPage = 5) {
+        // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
+        $queryBuilder = clone($this->queryBuilder);
+        $totalPage = ceil($this->count() / $perPage);
+        $offset = $perPage * ($page - 1);
+        $data = $queryBuilder
+            ->select(
+                'p.id', 'p.thumbnail', 'p.name', 'p.description', 'p.price', 'p.instock', 'p.category_id', 'cate.name as category_name'
+            )
+            ->from($this->tableName, 'p')
+            ->innerJoin('p', 'tbl_categories', 'cate', 'cate.id = p.category_id')
+            ->setFirstResult($offset)
+            ->setMaxResults($perPage)
+            ->orderBy('p.id', 'DESC')
+            ->fetchAllAssociative();
+    
+        return [$data, $totalPage];
+    }
+
+    public function paginateClientProducts($page = 1, $perPage = 3) {
         // Tạo một bản sao của queryBuilder bằng cách sử dụng clone
         $queryBuilder = clone($this->queryBuilder);
         $totalPage = ceil($this->count() / $perPage);
